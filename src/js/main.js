@@ -106,11 +106,11 @@ function init() {
   document.querySelector('.image.selector').insertAdjacentElement('beforeend', document.createElement('select'));
 
   /** Initialize image quantity selector for results. */
-  for (let i = 0; i <= 10; i++) {
+  for (let i = 0; i <= 24; i++) {
     const select = document.createElement('option');
     select.value = i;
     select.text = i;
-    if (i === 3) { select.selected = 'selected'; }
+    if (i === 24) { select.selected = 'selected'; }
     document.querySelector('.image.selector > select').insertAdjacentElement('beforeend', select);
   }
 
@@ -466,19 +466,20 @@ function progressBar(indicator, percentage) {
 /**
  * Shows the result of the sorter.
  * 
- * @param {number} [imageNum=3] Number of images to display. Defaults to 3.
+ * @param {number} [imageNum=24] Number of images to display. Defaults to 24.
  */
-function result(imageNum = 3) {
+function result(imageNum = 24) {
   document.querySelectorAll('.finished.button').forEach(el => el.style.display = 'block');
   document.querySelector('.image.selector').style.display = 'block';
   document.querySelector('.time.taken').style.display = 'block';
   
   document.querySelectorAll('.sorting.button').forEach(el => el.style.display = 'none');
   document.querySelectorAll('.sort.text').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.card').forEach(el => el.style.display = 'none');
   document.querySelector('.options').style.display = 'none';
   document.querySelector('.info').style.display = 'none';
 
-  const header = '<div class="result head"><div class="left">Order</div><div class="right">Name</div></div>';
+  const header = '<div class="result head">My Ranking</div>';
   const timeStr = `This sorter was completed on ${new Date(timestamp + timeTaken).toString()} and took ${msToReadableTime(timeTaken)}. <a href="${location.protocol}//${sorterURL}">Do another sorter?</a>`;
   const imgRes = (char, num) => {
     const charName = reduceTextWidth(char.name, 'Arial 12px', 160);

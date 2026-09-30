@@ -7,9 +7,10 @@
   <meta name="og:site_name" content="Takane no Nadeshiko &amp; Karen na Ivory Member Sorter">
   <meta name="og:description" content="A simple website for sorting Takane no Nadeshiko and Karen na Ivory members in a formatted list.">
   <!-- og:image must be an absolute URL. Replace USER and REPO with your GitHub username and repository name after publishing. -->
-  <meta name="og:image" content="https://Moyonko104.github.io/takaneko-sorter/src/assets/defaultL.jpg">
+  <meta name="og:image" content="https://USER.github.io/REPO/src/assets/defaultL.jpg">
   <title>Takane no Nadeshiko &amp; Karen na Ivory Member Sorter</title>
 
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="src/css/reset.css">
   <link rel="stylesheet" type="text/css" href="src/css/styles.css">
 
@@ -23,6 +24,11 @@
 </head>
 
 <body>
+<div class="title">
+    <h1>Takane no Nadeshiko &amp; Karen na Ivory</h1>
+    <h2>Member Sorter</h2>
+</div>
+
 <div class="container">
 
     <div class="progress">
@@ -33,25 +39,30 @@
     </div>
 
     <div class="sorter">
-        <img src="src/assets/defaultL.jpg" class="left sort image">
+        <div class="left card">
+            <img src="src/assets/defaultL.jpg" class="left sort image">
+            <div class="left sort text"><p></p></div>
+        </div>
 
-        <div class="starting start button">Takane no Nadeshiko &amp;<br>Karen na Ivory Sorter<br><br>Click to Start!</div>
-        <div class="starting load button">Load <span></span></div>
+        <div class="center">
+            <div class="starting start button">Click to Start!</div>
+            <div class="starting load button">Load <span></span></div>
 
-        <div class="loading button"><div></div><span>Loading...</span></div>
+            <div class="loading button"><div></div><span>Loading...</span></div>
 
-        <div class="sorting tie button">Tie</div>
-        <div class="sorting undo button">Undo</div>
-        <div class="sorting save button">Save Progress</div>
+            <div class="sorting tie button">Tie</div>
+            <div class="sorting undo button">Undo</div>
+            <div class="sorting save button">Save Progress</div>
 
-        <div class="finished save button">Generate Result URL</div>
-        <div class="finished getimg button">Generate Image</div>
-        <div class="finished list button">Generate Text List</div>
+            <div class="finished save button">Generate Result URL</div>
+            <div class="finished getimg button">Generate Image</div>
+            <div class="finished list button">Generate Text List</div>
+        </div>
 
-        <img src="src/assets/defaultR.jpg" class="right sort image">
-
-        <div class="left sort text"><p></p></div>
-        <div class="right sort text"><p></p></div>
+        <div class="right card">
+            <img src="src/assets/defaultR.jpg" class="right sort image">
+            <div class="right sort text"><p></p></div>
+        </div>
     </div>
 
     <div class="options"></div>
