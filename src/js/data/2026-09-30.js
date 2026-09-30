@@ -10,7 +10,7 @@ dataSet[dataSetVersion].options = [
     checked: true,
     sub: [
       { name: "Takane no Nadeshiko", tooltip: "Current members", key: "takaneko" },
-      { name: "Takaneko OG", tooltip: "Former members of Takane no Nadeshiko", key: "takaneko-og" },
+      { name: "Takane no Nadeshiko OG", tooltip: "Former members of Takane no Nadeshiko", key: "takaneko-og" },
       { name: "Karen na Ivory", tooltip: "Current members", key: "karen" },
       { name: "Karen na Ivory OG", tooltip: "Former members of Karen na Ivory", key: "karen-og" }
     ]
