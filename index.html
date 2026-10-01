@@ -1,311 +1,100 @@
-<!DOCTYPE html>
-<html lang="es">
+<html>
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mezclador de listas para YouTube</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;800&display=swap" rel="stylesheet">
-<script src="https://accounts.google.com/gsi/client" async defer></script>
-<style>
-:root{--bg:#eef1f5;--panel:#fff;--ink:#1a2230;--mute:#667085;--line:#d9dee7;--acc:#e5322d;--accink:#fff;--ok:#157f4a}
-@media(prefers-color-scheme:dark){:root:not([data-t=l]){--bg:#10141b;--panel:#18202b;--ink:#e8edf4;--mute:#93a0b3;--line:#2a3544;--acc:#ff5a52;--accink:#10141b;--ok:#4cc38a}}
-*{box-sizing:border-box}
-html{height:100%}
-body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font:15px/1.45 Figtree,system-ui,sans-serif}
-button,input,select{font:inherit;color:inherit}
-header{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:var(--panel);flex-wrap:wrap}
-h1{font-size:20px;font-weight:800;margin:0;margin-right:auto;letter-spacing:-.01em}
-.btn{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:600}
-.btn:hover{border-color:var(--mute)}
-.btn.p{background:var(--acc);color:var(--accink);border-color:var(--acc)}
-.btn:disabled{opacity:.5;cursor:default}
-:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
-main{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;padding:20px;max-width:1200px;margin:0 auto}
-@media(max-width:860px){main{grid-template-columns:1fr;padding:12px}}
-section,aside{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px}
-aside{align-self:start;position:sticky;top:12px}
-@media(max-width:860px){aside{position:static}}
-.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-input[type=text],input:not([type]),select{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;min-width:0}
-.grow{flex:1}
-.chips{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
-.chip{border:1px solid var(--line);background:var(--bg);border-radius:99px;padding:3px 12px;cursor:pointer;font-size:13px}
-.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:12px 0}
-.tab{background:none;border:0;border-bottom:2px solid transparent;padding:8px 12px;cursor:pointer;font-weight:600;color:var(--mute)}
-.tab.on{color:var(--ink);border-color:var(--acc)}
-.v{display:flex;gap:12px;align-items:center;padding:8px;border-radius:8px;cursor:pointer}
-.v:hover{background:var(--bg)}
-.v img{width:112px;aspect-ratio:16/9;object-fit:cover;border-radius:6px;background:var(--line);flex:none}
-.v b{font-weight:600;display:block}
-.v small,.mute{color:var(--mute)}
-.v input{width:18px;height:18px;accent-color:var(--acc);flex:none}
-.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
-.sel{max-height:300px;overflow:auto;margin:10px 0;border-top:1px solid var(--line)}
-.sel div{display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line);font-size:13px}
-.sel span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.x{background:none;border:0;color:var(--mute);cursor:pointer;font-size:16px}
-.msg{padding:10px 12px;border-radius:8px;background:var(--bg);margin:10px 0;font-size:14px}
-.err{color:var(--acc)}
-details{margin-top:10px}summary{cursor:pointer;font-weight:600}
-ol{padding-left:20px}code{background:var(--bg);padding:1px 5px;border-radius:4px}
-.empty{padding:28px 8px;text-align:center;color:var(--mute)}
-a{color:var(--acc)}
-</style>
+  <link rel="shortcut icon" href="src/assets/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="src/assets/favicon.ico" type="image/x-icon">
+  <meta charset="utf-8">
+  <meta name="og:site_name" content="Takane no Nadeshiko &amp; Karen na Ivory Member Sorter">
+  <meta name="og:description" content="A simple website for sorting Takane no Nadeshiko and Karen na Ivory members in a formatted list.">
+  <!-- og:image must be an absolute URL. Replace USER and REPO with your GitHub username and repository name after publishing. -->
+  <meta name="og:image" content="https://USER.github.io/REPO/src/assets/defaultL.jpg">
+  <title>Takane no Nadeshiko &amp; Karen na Ivory Member Sorter</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="src/css/reset.css">
+  <link rel="stylesheet" type="text/css" href="src/css/styles.css">
+
+  <script src="src/js/data.js"></script>
+  <script src="src/js/data/2026-09-30.js"></script>
+
+  <script src="src/js/html2canvas.min.js"></script>
+  <script src="src/js/lz-string.min.js"></script>
+  <script src="src/js/seedrandom.min.js"></script>
+  <script src="src/js/main.js"></script>
 </head>
+
 <body>
-<header>
-  <h1>Mezclador de listas</h1>
-  <span id="who" class="mute"></span>
-  <button class="btn" id="cfgBtn">Configuración</button>
-  <button class="btn p" id="loginBtn">Conectar con Google</button>
-</header>
-
-<main>
-<div>
-  <section id="cfg" hidden>
-    <b>Client ID de Google</b>
-    <div class="row" style="margin-top:8px">
-      <input id="cid" class="grow" placeholder="1234-abc.apps.googleusercontent.com">
-      <button class="btn" id="saveCid">Guardar</button>
-    </div>
-    <details>
-      <summary>¿Cómo lo consigo? (una sola vez)</summary>
-      <ol>
-        <li>Entrá a <a href="https://console.cloud.google.com/" target="_blank" rel="noopener">Google Cloud Console</a> y creá un proyecto.</li>
-        <li>En "APIs y servicios", activá <b>YouTube Data API v3</b>.</li>
-        <li>En "Pantalla de consentimiento OAuth", elegí "Externo" y agregá tu mail como <b>usuario de prueba</b>.</li>
-        <li>En "Credenciales", creá un <b>ID de cliente OAuth</b> de tipo "Aplicación web".</li>
-        <li>En "Orígenes autorizados de JavaScript" poné la URL de tu GitHub Pages, por ejemplo <code>https://tuusuario.github.io</code> (y <code>http://localhost:8000</code> si probás en tu compu).</li>
-        <li>Copiá el Client ID y pegalo arriba.</li>
-      </ol>
-    </details>
-  </section>
-
-  <section style="margin-top:0">
-    <b>Agregar fuente</b>
-    <div class="row" style="margin-top:8px">
-      <input id="q" class="grow" placeholder="Link de canal, @usuario, nombre o link de una lista">
-      <button class="btn p" id="go">Cargar</button>
-    </div>
-    <div class="chips" id="chips"></div>
-    <div id="msg"></div>
-    <div id="chHead"></div>
-    <div class="tabs" id="tabs" hidden>
-      <button class="tab on" data-tab="videos">Videos</button>
-      <button class="tab" data-tab="lists">Listas</button>
-    </div>
-    <div class="tools" id="tools" hidden>
-      <button class="btn" id="allBtn">Marcar los cargados</button>
-      <button class="btn" id="noneBtn">Desmarcar los cargados</button>
-    </div>
-    <div id="list"><div class="empty">Cargá un canal para ver sus videos y listas. Lo que tildes se va sumando a tu selección, de cualquier canal.</div></div>
-    <div class="row" style="justify-content:center;margin-top:10px"><button class="btn" id="more" hidden>Cargar más</button></div>
-  </section>
+<div class="title">
+    <h1>Takane no Nadeshiko &amp; Karen na Ivory</h1>
+    <h2>Member Sorter</h2>
 </div>
 
-<aside>
-  <b>Tu selección: <span id="count">0</span> videos</b>
-  <div class="sel" id="sel"></div>
-  <div class="row"><input id="name" class="grow" placeholder="Nombre de la lista">
-  <select id="priv"><option value="private">Privada</option><option value="unlisted">No listada</option><option value="public">Pública</option></select></div>
-  <div class="row" style="margin-top:10px">
-    <button class="btn p grow" id="make">Crear lista en YouTube</button>
-    <button class="btn" id="clear">Vaciar</button>
-  </div>
-  <div id="out"></div>
-  <p class="mute" style="font-size:12px;margin-bottom:0">Cada video agregado gasta 50 de la cuota diaria gratuita (10.000), unos 200 videos por día.</p>
-</aside>
-</main>
+<div class="container">
 
-<script>
-const $=s=>document.querySelector(s);
-const sel=new Map();            // videoId -> {t, th, ch}
-const sources=new Map();        // channelId -> {id,title,uploads}
-let token=null, tc=null, cur=null, tab='videos', next=null, items=[], mode='videos';
+    <div class="progress">
+        <span class="progressbattle"></span>
+        <div class="progressbar">
+            <div class="progressfill"><span class="progresstext"></span></div>
+        </div>
+    </div>
 
-const store={
-  get(k){try{return localStorage.getItem(k)}catch(e){return null}},
-  set(k,v){try{localStorage.setItem(k,v)}catch(e){}}
-};
-try{JSON.parse(store.get('sel')||'[]').forEach(([k,v])=>sel.set(k,v))}catch(e){}
-$('#cid').value=store.get('cid')||'';
-if(!$('#cid').value)$('#cfg').hidden=false;
+    <div class="sorter">
+        <div class="left card">
+            <img src="src/assets/defaultL.jpg" class="left sort image">
+            <div class="left sort text"><p></p></div>
+        </div>
 
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const say=(h,err)=>{$('#msg').innerHTML=h?`<div class="msg ${err?'err':''}">${h}</div>`:''};
+        <div class="center">
+            <div class="starting start button">Click to Start!</div>
+            <div class="starting load button">Load <span></span></div>
 
-/* ---------- Sesión ---------- */
-function initAuth(){
-  const id=$('#cid').value.trim();
-  if(!id||!window.google||!google.accounts)return false;
-  tc=google.accounts.oauth2.initTokenClient({
-    client_id:id,
-    scope:'https://www.googleapis.com/auth/youtube',
-    callback:r=>{
-      if(r.error){say('No se pudo conectar: '+esc(r.error),true);return}
-      token=r.access_token;$('#loginBtn').textContent='Reconectar';$('#who').textContent='Conectado';say('');
-    }
-  });
-  return true;
-}
-$('#loginBtn').onclick=()=>{
-  if(!$('#cid').value.trim()){$('#cfg').hidden=false;say('Primero pegá tu Client ID en Configuración.',true);return}
-  if(!initAuth()){say('Google todavía está cargando, probá de nuevo en un segundo.',true);return}
-  tc.requestAccessToken();
-};
-$('#cfgBtn').onclick=()=>{$('#cfg').hidden=!$('#cfg').hidden};
-$('#saveCid').onclick=()=>{store.set('cid',$('#cid').value.trim());$('#cfg').hidden=true;say('Client ID guardado. Ahora tocá "Conectar con Google".')};
+            <div class="loading button"><div></div><span>Loading...</span></div>
 
-/* ---------- API ---------- */
-async function api(path,params={},method='GET',body){
-  if(!token)throw new Error('Primero conectá tu cuenta de Google.');
-  const u=new URL('https://www.googleapis.com/youtube/v3/'+path);
-  Object.entries(params).forEach(([k,v])=>u.searchParams.set(k,v));
-  const r=await fetch(u,{method,headers:{Authorization:'Bearer '+token,...(body?{'Content-Type':'application/json'}:{})},body:body?JSON.stringify(body):undefined});
-  const j=await r.json();
-  if(!r.ok){
-    const e=new Error(r.status===401?'La sesión venció. Tocá "Reconectar".':(j.error&&j.error.message)||('Error '+r.status));
-    e.reason=j.error&&j.error.errors&&j.error.errors[0]&&j.error.errors[0].reason;throw e;
-  }
-  return j;
-}
-const run=async f=>{try{await f()}catch(e){say(esc(e.message),true)}};
+            <div class="sorting tie button">Tie</div>
+            <div class="sorting undo button">Undo</div>
+            <div class="sorting save button">Save Progress</div>
 
-/* ---------- Cargar fuentes ---------- */
-$('#go').onclick=()=>run(async()=>{
-  const q=$('#q').value.trim();if(!q)return;say('Buscando…');
-  let m;
-  if((m=q.match(/[?&]list=([\w-]+)/)))return openPlaylistOnly(m[1]);
-  if((m=q.match(/channel\/(UC[\w-]{22})/))||(m=q.match(/^(UC[\w-]{22})$/)))return openChannel({id:m[1]});
-  if((m=q.match(/@([^\/?\s]+)/)))return openChannel({forHandle:'@'+decodeURIComponent(m[1])});
-  const s=await api('search',{part:'snippet',type:'channel',q,maxResults:1});
-  if(!s.items.length)throw new Error('No encontré ningún canal con ese nombre.');
-  return openChannel({id:s.items[0].snippet.channelId});
-});
-$('#q').addEventListener('keydown',e=>{if(e.key==='Enter')$('#go').click()});
+            <div class="finished save button">Generate Result URL</div>
+            <div class="finished getimg button">Generate Image</div>
+            <div class="finished list button">Generate Text List</div>
+        </div>
 
-async function openChannel(p){
-  const r=await api('channels',{part:'snippet,contentDetails',...p});
-  if(!r.items||!r.items.length)throw new Error('No encontré ese canal.');
-  const c=r.items[0];
-  cur={id:c.id,title:c.snippet.title,uploads:c.contentDetails.relatedPlaylists.uploads};
-  sources.set(cur.id,cur);renderChips();say('');
-  $('#chHead').innerHTML=`<h2 style="margin:12px 0 0;font-size:18px">${esc(cur.title)}</h2>`;
-  $('#tabs').hidden=false;setTab('videos');
-}
-async function openPlaylistOnly(id){
-  const r=await api('playlists',{part:'snippet',id});
-  const t=(r.items&&r.items[0]&&r.items[0].snippet.title)||'Lista';
-  cur=null;say('');$('#chHead').innerHTML=`<h2 style="margin:12px 0 0;font-size:18px">${esc(t)}</h2>`;
-  $('#tabs').hidden=true;await showItems(id);
-}
-function renderChips(){
-  $('#chips').innerHTML=[...sources.values()].map(s=>`<button class="chip ${cur&&cur.id===s.id?'on':''}" data-ch="${s.id}">${esc(s.title)}</button>`).join('');
-}
-$('#chips').onclick=e=>{const b=e.target.closest('[data-ch]');if(b)run(()=>openChannel({id:b.dataset.ch}))};
+        <div class="right card">
+            <img src="src/assets/defaultR.jpg" class="right sort image">
+            <div class="right sort text"><p></p></div>
+        </div>
+    </div>
 
-/* ---------- Pestañas ---------- */
-document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>run(()=>setTab(b.dataset.tab)));
-async function setTab(t){
-  tab=t;document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));
-  if(t==='videos')await showItems(cur.uploads);else await showLists();
-}
+    <div class="options"></div>
+    <div class="image selector">Display Images on Result: </div>
+    <div class="time taken"></div>
+    <div class="results"></div>
 
-/* ---------- Videos ---------- */
-let pl=null;
-async function showItems(playlistId,more){
-  mode='videos';pl=playlistId;
-  if(!more){items=[];next=null;$('#list').innerHTML='<div class="empty">Cargando…</div>'}
-  const r=await api('playlistItems',{part:'snippet',playlistId,maxResults:50,...(next?{pageToken:next}:{})});
-  next=r.nextPageToken||null;
-  items.push(...r.items.map(toVideo).filter(Boolean));
-  drawVideos();
-}
-function toVideo(i){
-  const s=i.snippet;if(!s.resourceId||s.title==='Private video'||s.title==='Deleted video')return null;
-  const th=s.thumbnails&&(s.thumbnails.medium||s.thumbnails.default);
-  return{id:s.resourceId.videoId,t:s.title,th:th?th.url:'',ch:s.videoOwnerChannelTitle||''};
-}
-function drawVideos(){
-  $('#tools').hidden=!items.length;$('#more').hidden=!next;
-  $('#list').innerHTML=items.length?items.map(v=>`<label class="v"><input type="checkbox" data-id="${v.id}" ${sel.has(v.id)?'checked':''}><img loading="lazy" src="${esc(v.th)}" alt=""><span><b>${esc(v.t)}</b><small>${esc(v.ch)}</small></span></label>`).join(''):'<div class="empty">No hay videos para mostrar.</div>';
-}
-$('#list').addEventListener('change',e=>{
-  const id=e.target.dataset&&e.target.dataset.id;if(!id)return;
-  const v=items.find(x=>x.id===id);
-  e.target.checked?sel.set(id,{t:v.t,th:v.th,ch:v.ch}):sel.delete(id);drawSel();
-});
-$('#allBtn').onclick=()=>{items.forEach(v=>sel.set(v.id,{t:v.t,th:v.th,ch:v.ch}));drawVideos();drawSel()};
-$('#noneBtn').onclick=()=>{items.forEach(v=>sel.delete(v.id));drawVideos();drawSel()};
-$('#more').onclick=()=>run(async()=>{mode==='lists'?await showLists(true):await showItems(pl,true)});
+    <div class="info">
+        <a href="https://github.com/execfera/charasort/">Source Code</a> | <a class="clearsave">Clear Save Data</a>
+        
+        <br><br>
 
-/* ---------- Listas del canal ---------- */
-let lists=[];
-async function showLists(more){
-  mode='lists';$('#tools').hidden=true;
-  if(!more){lists=[];next=null;$('#list').innerHTML='<div class="empty">Cargando…</div>'}
-  const r=await api('playlists',{part:'snippet,contentDetails',channelId:cur.id,maxResults:50,...(next?{pageToken:next}:{})});
-  next=r.nextPageToken||null;lists.push(...r.items);
-  $('#more').hidden=!next;
-  $('#list').innerHTML=lists.length?lists.map(l=>{const th=l.snippet.thumbnails&&(l.snippet.thumbnails.medium||l.snippet.thumbnails.default);
-    return`<div class="v"><img loading="lazy" src="${esc(th?th.url:'')}" alt=""><span class="grow"><b>${esc(l.snippet.title)}</b><small>${l.contentDetails.itemCount} videos</small></span><button class="btn" data-open="${l.id}">Abrir</button><button class="btn" data-all="${l.id}">Marcar toda</button></div>`}).join(''):'<div class="empty">Este canal no tiene listas públicas.</div>';
-}
-$('#list').addEventListener('click',e=>{
-  const o=e.target.closest('[data-open]'),a=e.target.closest('[data-all]');
-  if(o)run(async()=>{$('#tabs').hidden=true;await showItems(o.dataset.open)});
-  if(a)run(async()=>{
-    a.disabled=true;let tok=null,n=0;
-    do{
-      const r=await api('playlistItems',{part:'snippet',playlistId:a.dataset.all,maxResults:50,...(tok?{pageToken:tok}:{})});
-      r.items.map(toVideo).filter(Boolean).forEach(v=>{sel.set(v.id,{t:v.t,th:v.th,ch:v.ch});n++});
-      tok=r.nextPageToken;a.textContent='Marcados: '+n;
-    }while(tok);
-    drawSel();
-  });
-});
+        <p>Sorter for Takane no Nadeshiko and Karen na Ivory members. Pick your groups, and hit the Start button.</p>
+        <p><strong>Certain options have details that you can hover to read.</strong></p>
+        <p>Click on the member you like better from the two, or tie them if you like them equally or don't know them.</p>
+        <p>Depending on how many groups you pick, you'll get up to 90 picks, so set aside a cup of tea for this.</p>
 
-/* ---------- Selección ---------- */
-function drawSel(){
-  $('#count').textContent=sel.size;
-  $('#sel').innerHTML=[...sel].map(([id,v])=>`<div><span title="${esc(v.t)}">${esc(v.t)}</span><button class="x" data-rm="${id}" aria-label="Quitar">×</button></div>`).join('')||'<div class="mute">Todavía no marcaste nada.</div>';
-  store.set('sel',JSON.stringify([...sel]));
-}
-$('#sel').onclick=e=>{const b=e.target.closest('[data-rm]');if(!b)return;sel.delete(b.dataset.rm);drawSel();if(mode==='videos'&&items.length)drawVideos()};
-$('#clear').onclick=()=>{if(sel.size&&!confirm('¿Vaciar la selección?'))return;sel.clear();drawSel();if(mode==='videos'&&items.length)drawVideos()};
+        <br><br>
 
-/* ---------- Crear lista ---------- */
-$('#make').onclick=()=>run(async()=>{
-  const out=$('#out');
-  if(!sel.size)throw new Error('Marcá al menos un video.');
-  const title=$('#name').value.trim();if(!title)throw new Error('Ponele un nombre a la lista.');
-  $('#make').disabled=true;
-  try{
-    const p=await api('playlists',{part:'snippet,status'},'POST',{snippet:{title,description:'Creada con Mezclador de listas'},status:{privacyStatus:$('#priv').value}});
-    const ids=[...sel.keys()];let ok=0;
-    for(const id of ids){
-      out.innerHTML=`<div class="msg">Agregando ${ok+1} de ${ids.length}…</div>`;
-      try{
-        await api('playlistItems',{part:'snippet'},'POST',{snippet:{playlistId:p.id,resourceId:{kind:'youtube#video',videoId:id}}});
-        sel.delete(id);ok++;
-      }catch(e){
-        if(e.reason==='quotaExceeded'||e.reason==='rateLimitExceeded'){
-          drawSel();
-          out.innerHTML=`<div class="msg err">Se acabó la cuota diaria. Se agregaron ${ok} videos; los ${ids.length-ok} restantes siguen en tu selección. Mañana podés sumarlos a la misma lista.</div>`;
-          return;
-        }
-        // video no disponible: se salta
-        sel.delete(id);
-      }
-    }
-    drawSel();if(mode==='videos'&&items.length)drawVideos();
-    out.innerHTML=`<div class="msg" style="color:var(--ok)">Lista creada con ${ok} videos. <a href="https://www.youtube.com/playlist?list=${p.id}" target="_blank" rel="noopener">Abrirla en YouTube</a></div>`;
-  }finally{$('#make').disabled=false}
-});
+        <p>Keyboard controls during sorting: H/LeftArrow (pick left) J/DownArrow (undo) K/UpArrow (tie) L/RightArrow (pick right) S (save progress).</p>
+        <p>Before sorting: S/Enter (start sorting) L (load progress).
+        <p>1/2/3 always correspond to the first/second/third buttons.</p>
+        
+        <br><br>
 
-drawSel();
-window.addEventListener('load',()=>setTimeout(initAuth,800));
-</script>
+        <p>Fan-made sorter. All member images belong to their respective owners. Based on <a href="https://github.com/execfera/charasort/">charasort</a> by Frelia (@execfera).</p>
+
+        <br><br>
+
+        <p>September 30th, 2026 - Sorter created.</p>
+    </div>
+</div>
 </body>
+
 </html>
